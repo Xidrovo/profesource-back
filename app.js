@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-const serverApp = () => {
+const serverApp = async () => {
   // Initialize server
   const app = express();
   const server = require("http").Server(app);
@@ -15,6 +15,28 @@ const serverApp = () => {
 
   // Globals
   global.logger = require("./modules/logger");
+
+  // DB
+  const db = require("./db/mysql");
+  await db.connect();
+
+  global.db = db;
+
+/**
+ * db = {
+ *   sequelize: {
+ *     users: {},
+ *     roles: {},
+ *   }
+ * };
+ */
+
+  // Require api
+  const api = require("./api/modules");
+  app.use("/api", api);
+
+  // /api/users/register
+  // /api/roles/create
 
   // Error handling middleware
   app.use((err, _req, _res, _next) => {
