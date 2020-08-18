@@ -16,6 +16,24 @@ const serverApp = () => {
   // Globals
   global.logger = require("./modules/logger");
 
+  // DB
+  const db = require("./db/mysql");
+  await db.connect();
+
+  global.db = db;
+  /**
+ * db = {
+ *   sequelize: {
+ *     users: {},
+ *     roles: {},
+ *   }
+ * };
+ */
+
+  // Require api
+  const api = require("./api/modules");
+  app.use("/api",api);
+
   // Error handling middleware
   app.use((err, _req, _res, _next) => {
     global.logger.error(err);
