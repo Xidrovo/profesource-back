@@ -42,7 +42,8 @@ const init = async () => {
     server.on("listening", onListening);
     server.listen(app.get("port"));
   } catch (error) {
-    global.logger.error(error);
+    console.log(error)
+    // global.logger.error(error);
   }
 };
 

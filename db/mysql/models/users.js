@@ -86,12 +86,12 @@ module.exports = (sequelize, DataTypes) => {
       }
     );
   
-    User.associate = (models) => {
-      User.hasMany(models.Session);
+    // User.associate = (models) => {
+    //   User.hasMany(models.Session);
     //   User.belongsTo(models.User, {
     //     as: "RegisteredBy",
     //     foreignKey: "registered_by",
     //   });
-    };
+    // };
     return User;
   };

@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-const serverApp = () => {
+const serverApp = async () => {
   // Initialize server
   const app = express();
   const server = require("http").Server(app);
@@ -17,7 +17,7 @@ const serverApp = () => {
   global.logger = require("./modules/logger");
 
   // DB
-  const db = require("./db/mysql");
+  const db = require("./db/mysql/models");
   await db.connect();
 
   global.db = db;

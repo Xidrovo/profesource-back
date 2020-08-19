@@ -12,14 +12,8 @@ const config = require(__dirname + "/../config.js")[env];
 const db = {};
 
 // Initialize sequelize instance
-const Op = Sequelize.Op;
-const operatorsAliases = {
-  $or: Op.or,
-  $and: Op.and,
-  $like: Op.like,
-};
-config.operatorsAliases = operatorsAliases;
 let sequelize;
+console.log(config);
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
