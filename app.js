@@ -16,6 +16,7 @@ const serverApp = async () => {
   // Globals
   global.logger = require("./modules/logger");
 
+<<<<<<< Updated upstream
   // DB
   const db = require("./db/mysql/models");
   await db.connect();
@@ -33,6 +34,11 @@ const serverApp = async () => {
   // Require api
   const api = require("./api/modules");
   app.use("/api",api);
+=======
+  //DB
+  const db = require('./db/mysql');
+  db.connect();
+>>>>>>> Stashed changes
 
   // Error handling middleware
   app.use((err, _req, _res, _next) => {
