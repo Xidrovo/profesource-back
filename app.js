@@ -16,6 +16,10 @@ const serverApp = () => {
   // Globals
   global.logger = require("./modules/logger");
 
+  //DB
+  const db = require('./db/mysql');
+  db.connect();
+
   // Error handling middleware
   app.use((err, _req, _res, _next) => {
     global.logger.error(err);

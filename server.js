@@ -1,4 +1,4 @@
-process.on("uncaughtException", err => {
+process.on("uncaughtException", (err) => {
   console.error(`Caught exception: ${JSON.stringify(err)}`);
   console.error(err.stack);
 });
@@ -13,28 +13,27 @@ const init = async () => {
         throw error;
       }
       const port = process.env.PORT;
-      const bind = typeof port === "string"
-        ? `Pipe ${port}`
-        : `Port ${port}`;
+      const bind = typeof port === "string" ? `Pipe ${port}` : `Port ${port}`;
       switch (error.code) {
-      case "EACCES":
-        global.logger.error(`${bind} correr en otro puerto, este puerto requiere permisos de root`);
-        process.exit(1);
-        break;
-      case "EADDRINUSE":
-        global.logger.error(`${bind} el puerto ya esta en uso client`);
-        process.exit(1);
-        break;
-      default:
-        throw error;
+        case "EACCES":
+          global.logger.error(
+            `${bind} correr en otro puerto, este puerto requiere permisos de root`
+          );
+          process.exit(1);
+          break;
+        case "EADDRINUSE":
+          global.logger.error(`${bind} el puerto ya esta en uso client`);
+          process.exit(1);
+          break;
+        default:
+          throw error;
       }
     };
 
     const onListening = () => {
       const addr = server.address();
-      const bind = typeof addr === "string"
-        ? `Pipe ${addr}`
-        : `Port ${addr.port}`;
+      const bind =
+        typeof addr === "string" ? `Pipe ${addr}` : `Port ${addr.port}`;
       global.logger.info(`Server general corriendo en  ${bind}`);
     };
 
