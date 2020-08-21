@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Answers = sequelize.define(
+  const Answer = sequelize.define(
     "Answer",
     {
       idAnswer: {
@@ -13,14 +13,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
          validate: {
            notNull: {
-             msg: "user name is missing",
+             msg: "username is missing",
            },
            notEmpty: {
-             msg: "user name must not be empty",
+             msg: "username must not be empty",
            },
            not: {
              args: /[`~,<>;':"/[\]|{}()=_+-\d]/,
-             msg: "user must only contain letters",
+             msg: "username must only contain letters",
            },
          },
       },
@@ -36,29 +36,13 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      created_at: {
+      createdAt: {
+        field: "created_at",
         type: DataTypes.DATE,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Date is missing",
-          },
-          notEmpty: {
-            msg: "Date must not be empty",
-          },
-        },
       },
-      updated_at: {
+      updatedAt: {
+        field: "updated_at",
         type: DataTypes.DATE,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Date is missing",
-          },
-          notEmpty: {
-            msg: "Date must not be empty",
-          },
-        },
       },
       status: {
         type: DataTypes.STRING,
@@ -103,9 +87,15 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
     }
   );
-  Answers.associate=(models) => {
-     Answers.belongsTo(models.users);
-     Answers.belongsTo(models.posts);
+  Answer.associate=(models) => {
+     Answer.belongsTo(models.User,{
+      foreignKey: 'username',
+      foreignKeyConstraint: true,
+     });
+     Answer.belongsTo(models.Posts,{
+      foreignKey: 'id_Post',
+      foreignKeyConstraint: true,
+     });
   };
-  return Answers;
+  return Answer;
 };

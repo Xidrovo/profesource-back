@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       username: {
         type: DataTypes.STRING,
-        allowNull: flase,
+        allowNull: false,
         validate: {
           notNull: {
             msg: "username is missing",
@@ -60,17 +60,13 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      Publication_date: {
+      createdAt: {
+        field: "created_at",
         type: DataTypes.DATE,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Date is missing",
-          },
-          notEmpty: {
-            msg: "Date must not be empty",
-          },
-        },
+      },
+      updatedAt: {
+        field: "updated_at",
+        type: DataTypes.DATE,
       },
       status: {
         type: DataTypes.STRING,
@@ -115,11 +111,14 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
     }
   );
-  Posts.associate=(models) => {
-    Posts.hasMany(models.answers);
-    Posts.hasMany(models.post_tag);
-    Posts.hasMany(models.post_materia);
-    Posts.belongsTo(models.users);
-  };
+    Posts.associate=(models)=>{
+    Posts.belongsTo(models.User,{
+      foreignKey: 'username',
+      foreignKeyConstraint: true,
+    });
+    Posts.hasMany(models.Post_materia);
+    Posts.hasMany(models.Answer);
+    Posts.hasMany(models.Post_Tag);
+  }
   return Posts;
 };

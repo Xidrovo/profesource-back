@@ -8,34 +8,21 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      created_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Date is missing",
-          },
-          notEmpty: {
-            msg: "Date must not be empty",
-          },
-        },
+      TagName:{
+        type: DataTypes.STRING
       },
-      updated_at: {
+      createdAt: {
+        field: "created_at",
         type: DataTypes.DATE,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Date is missing",
-          },
-          notEmpty: {
-            msg: "Date must not be empty",
-          },
-        },
-      }
+      },
+      updatedAt: {
+        field: "updated_at",
+        type: DataTypes.DATE,
+      },
     },
     {
       tableName: "TAG",
-      underscored: true,
+      underscored: false,
       name: {
         singular: "TAG",
         plural: "TAGS",
@@ -44,7 +31,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Tags.associate=(models)=>{
-    Tags.hasMany(models.post_tag);
+    Tags.belongsToMany(models.Posts_Tag,{
+     through: models.Posts_Tag,
+
+    });
   }
   return Tags;
 };

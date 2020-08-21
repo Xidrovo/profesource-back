@@ -13,40 +13,24 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
          validate: {
            notNull: {
-             msg: "user name is missing",
+             msg: "username is missing",
            },
            notEmpty: {
-             msg: "user name must not be empty",
+             msg: "username must not be empty",
            },
            not: {
              args: /[`~,<>;':"/[\]|{}()=_+-\d]/,
-             msg: "user must only contain letters",
+             msg: "username must only contain letters",
            },
          },
       },
-      created_at: {
+      createdAt: {
+        field: "created_at",
         type: DataTypes.DATE,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Date is missing",
-          },
-          notEmpty: {
-            msg: "Date must not be empty",
-          },
-        },
       },
-      update_at: {
+      updatedAt: {
+        field: "updated_at",
         type: DataTypes.DATE,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Date is missing",
-          },
-          notEmpty: {
-            msg: "Date must not be empty",
-          },
-        },
       },
       status: {
         type: DataTypes.STRING,
@@ -92,7 +76,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Session.associate=(models)=>{
-    Session.belongsTo(models.users);
+    Session.belongsTo(models.User,{
+      foreignKey: 'username',
+      foreignKeyConstraint: true,
+    });
   }
   return Session;
 };

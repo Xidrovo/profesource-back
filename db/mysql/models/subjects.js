@@ -5,42 +5,27 @@ module.exports = (sequelize, DataTypes) => {
       Subject_name: {
         type: DataTypes.STRING,
         allowNull: false,
+        primaryKey: true,
          validate: {
            notNull: {
-             msg: "user name is missing",
+             msg: "Subject name is missing",
            },
            notEmpty: {
-             msg: "user name must not be empty",
+             msg: "Subject name must not be empty",
            },
            not: {
              args: /[`~,<>;':"/[\]|{}()=_+-\d]/,
-             msg: "user must only contain letters",
+             msg: "Subject must only contain letters",
            },
          },
       },
-      created_at: {
+      createdAt: {
+        field: "created_at",
         type: DataTypes.DATE,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Date is missing",
-          },
-          notEmpty: {
-            msg: "Date must not be empty",
-          },
-        },
       },
-      updated_at: {
+      updatedAt: {
+        field: "updated_at",
         type: DataTypes.DATE,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Date is missing",
-          },
-          notEmpty: {
-            msg: "Date must not be empty",
-          },
-        },
       },
       status: {
         type: DataTypes.BOOLEAN,
@@ -70,7 +55,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Subjects.associate=(models)=>{
-    Subjects.hasMany(models.post_materia);
+    Subjects.belongsToMany(models.Post_materia,
+      { through: models.Post_materia },
+    );
   }
   return Subjects;
 };

@@ -1,7 +1,7 @@
 
 module.exports = (sequelize, DataTypes) => {
-  const Post_materias = sequelize.define(
-    "Posts_materias",
+  const Post_materia = sequelize.define(
+    "Post_materia",
     {
       idPost: {
         type: DataTypes.INTEGER,
@@ -14,41 +14,25 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
          validate: {
            notNull: {
-             msg: "user name is missing",
+             msg: "Subject_name is missing",
            },
            notEmpty: {
-             msg: "user name must not be empty",
+             msg: "Subject_name must not be empty",
            },
            not: {
              args: /[`~,<>;':"/[\]|{}()=_+-\d]/,
-             msg: "user must only contain letters",
+             msg: "Subject_name only contain letters",
            },
          },
       },
-      created_at: {
+      createdAt: {
+        field: "created_at",
         type: DataTypes.DATE,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Date is missing",
-          },
-          notEmpty: {
-            msg: "Date must not be empty",
-          },
-        },
       },
-      updated_at: {
+      updatedAt: {
+        field: "updated_at",
         type: DataTypes.DATE,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Date is missing",
-          },
-          notEmpty: {
-            msg: "Date must not be empty",
-          },
-        },
-      }
+      },
     },
     {
       tableName: "POST_MATERIA",
@@ -60,9 +44,12 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
     }
   );
-  Post_materias.associate=(models) => {
-      Post_materias.belongsTo(models.posts);
-      Post_materias.belongsTo(models.subjects);
+  Post_materia.associate=(models) => {
+      Post_materia.belongsTo(models.Posts,{
+        foreignKey: 'id_Post',
+        foreignKeyConstraint: true,
+      });
+      Post_materia.hasOne(models.Subjects);
   };
-  return Post_materias;
+  return Post_materia;
 };
