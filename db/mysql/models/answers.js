@@ -1,8 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
-  const Posts = sequelize.define(
-    "Posts",
+  const Answers = sequelize.define(
+    "Answer",
     {
-      idPost: {
+      idAnswer: {
         type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
@@ -10,57 +10,45 @@ module.exports = (sequelize, DataTypes) => {
       },
       username: {
         type: DataTypes.STRING,
-        allowNull: flase,
-        validate: {
-          notNull: {
-            msg: "username is missing",
-          },
-          notEmpty: {
-            msg: "username must not be empty",
-          },
-          not: {
-            args: /[`~,<>;':"/[\]|{}()=_+-\d]/,
-            msg: "user must only contain letters",
-          },
-        },
+        allowNull: false,
+         validate: {
+           notNull: {
+             msg: "user name is missing",
+           },
+           notEmpty: {
+             msg: "user name must not be empty",
+           },
+           not: {
+             args: /[`~,<>;':"/[\]|{}()=_+-\d]/,
+             msg: "user must only contain letters",
+           },
+         },
       },
-      Description: {
+      Answer: {
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Description is missing",
+            msg: "Answer is missing",
           },
           notEmpty: {
-            msg: "Description must not be empty",
+            msg: "Answer must not be empty",
           },
         },
       },
-      File: {
-        type: DataTypes.STRING,
+      created_at: {
+        type: DataTypes.DATE,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "File is missing",
+            msg: "Date is missing",
           },
           notEmpty: {
-            msg: "File must not be empty",
+            msg: "Date must not be empty",
           },
         },
       },
-      Punctuation: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Punctuation is missing",
-          },
-          notEmpty: {
-            msg: "Punctuation must not be empty",
-          },
-        },
-      },
-      Publication_date: {
+      updated_at: {
         type: DataTypes.DATE,
         allowNull: false,
         validate: {
@@ -106,20 +94,18 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
-      tableName: "POST",
+      tableName: "ANSWER",
       underscored: true,
       name: {
-        singular: "POST",
-        plural: "POSTS",
+        singular: "ANSWER",
+        plural: "ANSWERS",
       },
       sequelize,
     }
   );
-  Posts.associate=(models) => {
-    Posts.hasMany(models.answers);
-    Posts.hasMany(models.post_tag);
-    Posts.hasMany(models.post_materia);
-    Posts.belongsTo(models.users);
+  Answers.associate=(models) => {
+     Answers.belongsTo(models.users);
+     Answers.belongsTo(models.posts);
   };
-  return Posts;
+  return Answers;
 };
