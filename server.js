@@ -6,7 +6,7 @@ process.on("uncaughtException", (err) => {
 const init = async () => {
   try {
     const { serverApp } = require("./app");
-    const { server, app } = serverApp();
+    const { server, app } = await serverApp();
 
     const onError = (error) => {
       if (error.syscall !== "listen") {
