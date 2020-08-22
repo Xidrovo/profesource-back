@@ -118,7 +118,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     Posts.hasMany(models.Post_materia);
     Posts.hasMany(models.Answer);
-    Posts.hasMany(models.Post_Tag);
+    Posts.hasMany(models.Posts_Tag);
   }
   return Posts;
 };
