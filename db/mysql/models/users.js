@@ -75,6 +75,62 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      // Date_Of_Birth: {
+      //   type: DataTypes.DATE,
+      //   allowNull: false,
+      //   validate: {
+      //     notNull: {
+      //       msg: "Date of Birth is missing",
+      //     },
+      //     notEmpty: {
+      //       msg: "Date of Birth must not be empty",
+      //     },
+      //   },
+      // },
+      gender: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Gender is missing",
+          },
+          notEmpty: {
+            msg: "Gender must not be empty",
+          },
+          isIn: {
+            args: [["Male","Female"]],
+            msg: "Gender not allowed",
+          },
+        },
+      },
+      country: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Country is missing",
+          },
+          notEmpty: {
+            msg: "Country must not be empty",
+          }
+        }
+      },
+      rol: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Rol is missing",
+          },
+          notEmpty: {
+            msg: "Rol must not be empty",
+          },
+          isIn: {
+            args: [["Profesor","Estudiante"]],
+            msg: "Rol not allowed",
+          },
+        },
+      },
       state: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
@@ -111,9 +167,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   User.associate=(models) => {
-    User.hasMany(models.Posts);
-    User.hasMany(models.Session);
-    User.hasMany(models.Answer);
+    User.hasMany(models.Posts,{
+      foreignKey: 'username',
+    });
+    User.hasMany(models.Session,{
+      foreignKey: 'username',
+    });
+    User.hasMany(models.Answer,{
+      foreignKey: 'username',
+    });
 
   };
   return User;

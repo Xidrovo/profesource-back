@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      TagName:{
-        type: DataTypes.STRING
+      TagName: {
+        type: DataTypes.STRING,
       },
       createdAt: {
         field: "created_at",
@@ -30,10 +30,11 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
     }
   );
-  Tags.associate=(models)=>{
-    Tags.belongsToMany(models.Posts_Tag,{
-     through: models.Posts_Tag,
+  Tags.associate = (models) => {
+    Tags.belongsToMany(models.Tags, {
+      through: "Posts_Tags",
+      as: 'Tags', foreignKey: 'idTag',
     });
-  }
+  };
   return Tags;
 };

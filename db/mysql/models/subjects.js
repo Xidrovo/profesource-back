@@ -55,8 +55,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Subjects.associate=(models)=>{
-    Subjects.belongsToMany(models.Post_materia,
-      { through: models.Post_materia },
+    Subjects.belongsToMany(models.Posts,
+      { through: 'Posts_Materias',as: 'Subject', foreignKey: 'Subject_name' },
     );
   }
   return Subjects;

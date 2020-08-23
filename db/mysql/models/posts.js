@@ -2,11 +2,27 @@ module.exports = (sequelize, DataTypes) => {
   const Posts = sequelize.define(
     "Posts",
     {
-      idPost: {
+      id_Post: {
         type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
+      },
+      Title: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "username is missing",
+          },
+          notEmpty: {
+            msg: "username must not be empty",
+          },
+          not: {
+            args: /[`~,<>;':"/[\]|{}()=_+-\d]/,
+            msg: "user must only contain letters",
+          },
+        },
       },
       username: {
         type: DataTypes.STRING,
@@ -79,7 +95,7 @@ module.exports = (sequelize, DataTypes) => {
             msg: "Status must not be empty",
           },
           isIn: {
-            args: [["APPROVED", "DENIED","ONHOLD"]],
+            args: [["APPROVED", "DENIED", "ONHOLD"]],
             msg: "Status not allowed",
           },
         },
@@ -95,15 +111,15 @@ module.exports = (sequelize, DataTypes) => {
             msg: "state must not be empty",
           },
           isIn: {
-            args: [[true,false]],
+            args: [[true, false]],
             msg: "state not allowed",
           },
         },
-      }
+      },
     },
     {
       tableName: "POST",
-      underscored: true,
+      underscored: false,
       name: {
         singular: "POST",
         plural: "POSTS",
@@ -111,14 +127,16 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
     }
   );
-    Posts.associate=(models)=>{
-    Posts.belongsTo(models.User,{
-      foreignKey: 'username',
+  Posts.associate = (models) => {
+    Posts.belongsTo(models.User, {
+      foreignKey: "username",
       foreignKeyConstraint: true,
     });
-    Posts.hasMany(models.Post_materia);
-    Posts.hasMany(models.Answer);
-    Posts.hasMany(models.Posts_Tag);
-  }
+    Posts.hasMany(models.Answer,{
+      foreignKey: "id_Post",
+    });
+    Posts.belongsToMany(models.Subjects, { through: "Posts_Materias",as: 'Post_Materia', foreignKey: 'id_Post'});
+    Posts.belongsToMany(models.Tags, { through: "Posts_Tags",as: 'Post_Tags', foreignKey: 'id_Post'});
+  };
   return Posts;
 };

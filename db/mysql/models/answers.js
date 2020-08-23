@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const Answer = sequelize.define(
     "Answer",
     {
-      idAnswer: {
+      id_answer: {
         type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
@@ -79,7 +79,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       tableName: "ANSWER",
-      underscored: true,
+      underscored: false,
       name: {
         singular: "ANSWER",
         plural: "ANSWERS",

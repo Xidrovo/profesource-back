@@ -3,14 +3,13 @@ module.exports = (sequelize, DataTypes) => {
     "Session",
     {
       idSession: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
       },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
+        primaryKey: true,
          validate: {
            notNull: {
              msg: "username is missing",

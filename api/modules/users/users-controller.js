@@ -8,10 +8,15 @@ async function consult(req, res, next) {
 async function publish(req, res, next) {
   // crear user
   const user = await global.db.User;
-  return user
+  const userRegister = await user.findAll({where:{username: req.body.username}})
+  if(Object.keys(userRegister).length===0){
+    return user
     .create(req.body)
     .then((user) => res.status(200).send(user))
     .catch((error) => res.status(400).send(error));
+  }else{
+    return res.status(409).send("Username ya registrado en la base de datos, por favor intente con otro!");
+  }
 }
 async function update(req, res, next) {
   const {body} = req;

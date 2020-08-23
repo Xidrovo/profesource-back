@@ -8,10 +8,16 @@ async function consult(req,res,next){
 async function publish(req, res, next) {
   // crear subject
   const subject = await global.db.Subjects;
-  return subject
+  const subject_Target = await subject.findAll({where:{Subject_name:req.body.Subject_name}})
+  if(Object.keys(subject_Target).length===0){
+    return subject
     .create(req.body)
     .then(subject => res.status(200).send(subject))
     .catch(error => res.status(400).send(error))
+  }
+  else{
+    return res.status(409).send("Nombre de materia ya existente en la base de datos!");
+  }
 }
 async function update(req, res, next) {
   const {body} = req;
