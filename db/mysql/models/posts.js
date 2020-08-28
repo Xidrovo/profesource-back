@@ -13,10 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "username is missing",
+            msg: "Tittle is missing",
           },
           notEmpty: {
-            msg: "username must not be empty",
+            msg: "Tittle must not be empty",
           },
           not: {
             args: /[`~,<>;':"/[\]|{}()=_+-\d]/,
@@ -49,6 +49,18 @@ module.exports = (sequelize, DataTypes) => {
           },
           notEmpty: {
             msg: "Description must not be empty",
+          },
+        },
+      },
+      Subject_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Subject_name is missing",
+          },
+          notEmpty: {
+            msg: "Subject_name must not be empty",
           },
         },
       },
@@ -128,15 +140,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Posts.associate = (models) => {
-    Posts.belongsTo(models.User, {
-      foreignKey: "username",
-      foreignKeyConstraint: true,
-    });
-    Posts.hasMany(models.Answer,{
+    Posts.hasOne(models.Answer,{
       foreignKey: "id_Post",
     });
-    Posts.belongsToMany(models.Subjects, { through: "Posts_Materias",as: 'Post_Materia', foreignKey: 'id_Post'});
-    Posts.belongsToMany(models.Tags, { through: "Posts_Tags",as: 'Post_Tags', foreignKey: 'id_Post'});
+    Posts.belongsToMany(models.Tags, { through: "Posts_Tags",as: 'Post', foreignKey: 'id_Post'});
   };
   return Posts;
 };

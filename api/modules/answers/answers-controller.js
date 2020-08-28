@@ -25,7 +25,7 @@ async function consult(req,res,next){
           plain: true,// makes sure that the returned instances are just plain objects
         }
       )
-      .then((body) => res.status(200).send(body))
+      .then((body) => res.status(200).send(body)) //then((body) => res.status(200).json(body))
       .catch((error) => res.status(400).send(error));
   }
   async function clean(req, res, next){

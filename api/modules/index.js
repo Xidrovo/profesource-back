@@ -7,4 +7,5 @@ require("./posts")(app);
 require("./tags")(app);
 require("./subjects")(app);
 require("./answers")(app);
+require("../mail/email")(app);
 module.exports=app;

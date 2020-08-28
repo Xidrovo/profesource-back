@@ -55,9 +55,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Subjects.associate=(models)=>{
-    Subjects.belongsToMany(models.Posts,
-      { through: 'Posts_Materias',as: 'Subject', foreignKey: 'Subject_name' },
-    );
+    Subjects.hasOne(models.Posts,{
+      foreignKey:'Subject_name',
+      target:'Subject_name',
+    });
   }
   return Subjects;
 };
