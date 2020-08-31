@@ -31,6 +31,10 @@ const serverApp = async () => {
   //Require api
   const api = require("./api/modules");
   app.use("/api", api);
+
+  //Require api restdb-io
+  const api_noSQL = require("./api-noSQL/subjects-noSQL");
+  app.use("/api-noSQL", api_noSQL);
   
   // Error handling middleware
   app.use((err, _req, _res, _next) => {
