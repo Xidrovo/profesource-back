@@ -8,4 +8,5 @@ require("./tags")(app);
 require("./subjects")(app);
 require("./answers")(app);
 require("../mail/email")(app);
+require("../admin")(app);
 module.exports=app;
