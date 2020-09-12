@@ -14,7 +14,7 @@ async function barChart(req, res, next) {
 async function lineChart(req, res, next) {
     return (consulta = await db.sequelize
       .query(
-        "Select count(*) as NewUsers, monthname(created_at) as Mes from USER where state = true group by(mes);",
+        "Select count(*) as NewUsers, monthname(created_at) as Mes from USER where state = true group by(mes) order by (mes) desc;",
         {
           type: db.sequelize.QueryTypes.SELECT,
         }
