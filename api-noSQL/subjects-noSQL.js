@@ -3,10 +3,10 @@ var router = express.Router();
 var request = require("request");
 
 
-router.get('/subjects/consult', function(req, res, next) {
+router.get('/subjects/consult/:Materia', function(req, res, next) {
   var options = { 
     method: 'GET',
-    url: 'https://profesource-ea51.restdb.io/rest/materias',
+    url: `https://profesource-ea51.restdb.io/rest/materias?q={"Materia":"${req.params.Materia}"}`,
     headers: 
     { 
       'cache-control': 'no-cache',
