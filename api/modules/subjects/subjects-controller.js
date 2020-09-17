@@ -26,7 +26,7 @@ async function update(req, res, next) {
       {...body},
       {
         //condition to identify our target Subject
-        where: { Subject_name: body.Subject_name },
+        where: { Subject_name: req.params.Subject_name },
         returning: true, //needed for affectedRows to be populated
         plain: true,// makes sure that the returned instances are just plain objects
       }
@@ -34,12 +34,13 @@ async function update(req, res, next) {
     .then((body) => res.status(200).send(body))
     .catch((error) => res.status(400).send(error));
 }
+
 async function clean(req, res, next){
-  const {body} = req;
+  const {params} = req;
   return await global.db.Subjects
     .destroy({
       where:{
-        Subject_name: body.Subject_name,
+        Subject_name: params.Subject_name,
       }
     })
     .then((body) => res.sendStatus(200).send(body))

@@ -3,10 +3,10 @@ var router = express.Router();
 var request = require("request");
 
 
-router.get('/subjects/consult/:Materia', function(req, res, next) {
+router.get('/subjects/consult', function(req, res, next) {
   var options = { 
     method: 'GET',
-    url: `https://profesource-ea51.restdb.io/rest/materias?q={"Materia":"${req.params.Materia}"}`,
+    url: `https://profesource-ea51.restdb.io/rest/materias`,
     headers: 
     { 
       'cache-control': 'no-cache',
@@ -60,8 +60,8 @@ router.get('/subjects/consult/:Subject_name', async function(req, res) {
 router.put('/subjects/update/:id', async function(req, res) {
     var value={};
     var options = { 
-    method: 'GET',
-    url: 'https://profesource-ea51.restdb.io/rest/materias?q={"Materia":"'+`${req.params.id}`+'"}',
+    method: 'PUT',
+    url: `https://profesource-ea51.restdb.io/rest/materias/${req.params.id}`,
     headers: 
     { 
       'cache-control': 'no-cache',
@@ -78,16 +78,17 @@ router.put('/subjects/update/:id', async function(req, res) {
     json: true 
     };
     request(options, function (error, response, body) {
+      console.log(body)
         if (error) throw new Error(error);
         res.send("The subject was updated successfully");
   });
 });
 
 
-router.delete('/subjects/delete/:Subject_name', async function(req, res, next){
+router.delete('/subjects/delete/:Subject_id', async function(req, res, next){
   var options = { 
     method: 'DELETE',
-    url: 'https://profesource-ea51.restdb.io/rest/materias/*?q={"Materia":"'+`${req.params.Subject_name}`+'"}',
+    url: `https://profesource-ea51.restdb.io/rest/materias/${req.params.Subject_id}`,
     headers: 
     { 
       'cache-control': 'no-cache',

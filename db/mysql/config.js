@@ -1,3 +1,4 @@
+  
 module.exports = {
   development: {
     username: process.env.DATABASE_USER,
@@ -24,4 +25,3 @@ module.exports = {
     dialect: "mysql",
   },
 };
-  

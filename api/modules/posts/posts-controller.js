@@ -18,7 +18,7 @@ async function update(req, res, next) {
       {...body},
       {
         //condition to identify our target Post
-        where: { id_Post: body.idPost },
+        where: { id_Post: body.id_Post },
         returning: true, //needed for affectedRows to be populated
         plain: true,// makes sure that the returned instances are just plain objects
       }
