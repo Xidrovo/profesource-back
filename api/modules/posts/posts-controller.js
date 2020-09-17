@@ -18,7 +18,7 @@ async function update(req, res, next) {
       {...body},
       {
         //condition to identify our target Post
-        where: { idPost: body.idPost },
+        where: { id_Post: body.idPost },
         returning: true, //needed for affectedRows to be populated
         plain: true,// makes sure that the returned instances are just plain objects
       }
@@ -27,11 +27,11 @@ async function update(req, res, next) {
     .catch((error) => res.status(400).send(error));
 }
 async function clean(req, res, next){
-  const {body} = req;
+  const {params} = req;
   return await global.db.Posts
     .destroy({
       where:{
-        idPost: body.idPost,
+        id_Post: params.idPost,
       }
     })
     .then((body) => res.sendStatus(200).send(body))

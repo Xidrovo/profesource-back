@@ -5,6 +5,15 @@ async function consult(req,res,next){
       .then(answers => res.status(200).send(answers))
       .catch(error => res.status(400).send(error))
   }
+//get specific answers
+async function consultByPost(req,res,next){
+  const {params} = req;
+  const answers = await global.db.Answer;
+  return answers.findAll({where: {id_Post: params.id_Post}})
+    .then(answers => res.status(200).send(answers))
+    .catch(error => res.status(400).send(error))
+}
+
   //create new answer
   async function publish(req, res, next) {
     const answer = await global.db.Answer;
@@ -20,7 +29,7 @@ async function consult(req,res,next){
         {...body},
         {
           //condition to identify our target answer
-          where: { idAnswer: body.idAnswer },
+          where: { id_answer: body.id_answer },
           returning: true, //needed for affectedRows to be populated
           plain: true,// makes sure that the returned instances are just plain objects
         }
@@ -29,11 +38,11 @@ async function consult(req,res,next){
       .catch((error) => res.status(400).send(error));
   }
   async function clean(req, res, next){
-    const {body} = req;
+    const {params} = req;
     return await global.db.Answer
       .destroy({
         where:{
-          idAnswer: body.idAnswer,
+          id_answer: params.idAnswer,
         }
       })
       .then((body) => res.sendStatus(200).send(body))
@@ -42,6 +51,7 @@ async function consult(req,res,next){
   }
   module.exports = {
     consult,
+    consultByPost,
     publish,
     update,
     clean,
